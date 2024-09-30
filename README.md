@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+What is the Banker's Algorithm?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Banker's Algorithm is a resource allocation and deadlock avoidance algorithm that tests for the safety of resource allocation to multiple processes in a computer system. It operates by maintaining a set of resources and tracking the maximum resources each process may need. The algorithm checks whether granting a resource request will leave the system in a safe state, meaning that all processes can complete without entering a deadlock. If the system is in a safe state after the request, the resources are allocated; otherwise, the request is denied.
 
-## Available Scripts
+**Overview**
+Upon accessing the application, you will be directed to the Introduction page, where you can explore informative slides about the Banker's Algorithm. Navigation to other sections is facilitated through the hamburger menu located in the top right corner.
 
-In the project directory, you can run:
+The Pseudocode page provides a detailed explanation of how the algorithm operates, while the Calculator page allows users to input custom values to verify the system's state. Please note that the maximum number of processes is capped at 20, and the maximum number of resources is limited to 10.
 
-### `npm start`
+**Preview**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![image](https://github.com/user-attachments/assets/c4e5547d-d9b3-481c-9db2-e8d2ac694f2e)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+![image](https://github.com/user-attachments/assets/0648b3d7-16e3-4919-8882-f296a39aa435)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+![image](https://github.com/user-attachments/assets/4f054189-6e2f-4fef-84d5-0379a5b14f13)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
