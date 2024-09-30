@@ -1,0 +1,14 @@
+.code-box {
+    border: 1px solid #ccc; /* Light gray border */
+    width: 1000px;
+    padding: 10px; /* Space inside the box */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 5px; /* Rounded corners */
+    margin: 40px; /* Space above and below the box */
+    font-family: monospace; /* Monospace font for code */
+    overflow-x: auto; /* Enable horizontal scrolling for long lines */
+  }
+
+  .pseudocode{
+    margin-left: 42px;
+  }

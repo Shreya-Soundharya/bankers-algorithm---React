@@ -1,0 +1,75 @@
+/* Header container */
+.header {
+    display: flex;
+    align-items: center; /* Center vertically */
+    padding: 10px;
+    background-color: #4d7bc6;
+    position: relative;
+  }
+  
+  /* Logo styling */
+  .logo img {
+    height: 10vh; /* Adjust the size of the logo */
+    width: auto;
+    float: left;
+  }
+  
+  /* Title styling */
+  .header h1 {
+    font-size: 26px;
+    margin: 0;
+    color: #333;
+    flex: 1; /* Allow title to take available space */
+    text-align: center; /* Center the title */
+  }
+  
+  .hamburger {
+    float: right; /* Align hamburger menu to the right */
+    cursor: pointer; /* Change cursor to pointer */
+    margin-top: 0px; /* Space from top */
+    margin-right: 13px;
+  }
+  
+  .bar {
+    display: block;
+    width: 40px; /* Width of hamburger bars */
+    height: 10px; /* Height of hamburger bars */
+    margin: 5px auto; /* Margin for spacing */
+    background-color: #333; /* Color of bars */
+    transition: all 0.3s; /* Transition for smooth effect */
+    margin-right: 7px;
+  }
+  
+  .bar.active {
+    background-color: #007bff; /* Change color on active */
+  }
+  
+  .navbar {
+    position: absolute; /* Positioning for the dropdown */
+    top: 80px; /* Space below the header */
+    right: 0; /* Align to the right */
+    background: white; /* Background color for dropdown */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  }
+  
+  .navbar ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .navbar li {
+    margin: 10px 0; /* Space between nav items */
+  }
+  
+  .navbar a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Link color */
+    display: block; /* Make the whole area clickable */
+    padding: 10px; /* Padding for clickable area */
+  }
+  
+  .navbar li.active a {
+    font-weight: bold; /* Highlight active page */
+    color: #007bff; /* Change color for active page */
+  }
+  
