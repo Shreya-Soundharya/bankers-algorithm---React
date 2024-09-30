@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Calculator.css';
 
 const Calculator = () => {
-  const [processes, setProcesses] = useState(0);
-  const [resources, setResources] = useState(0);
+  const [processes, setProcesses] = useState('');
+  const [resources, setResources] = useState('');
   const [allocated, setAllocated] = useState([]);
   const [maximum, setMaximum] = useState([]);
   const [available, setAvailable] = useState([]);
@@ -12,31 +12,52 @@ const Calculator = () => {
   const [warnings, setWarnings] = useState([]);
 
   const handleProcessChange = (e) => {
-    const newProcesses = parseInt(e.target.value);
+    let newProcesses = e.target.value === '' ? '' : Math.max(1, Math.min(20, parseInt(e.target.value)));
     setProcesses(newProcesses);
-    // Reset states when the number of processes changes
-    setAllocated(Array(newProcesses).fill().map(() => Array(resources).fill(0)));
-    setMaximum(Array(newProcesses).fill().map(() => Array(resources).fill(0)));
-    setAvailable(Array(resources).fill(0));
-    setSafeSequence([]);
-    setIsSafe(null);
-    setWarnings([]);
+
+    if (newProcesses === '') {
+      // Reset states if the input is cleared
+      setAllocated([]);
+      setMaximum([]);
+      setAvailable([]);
+      setSafeSequence([]);
+      setIsSafe(null);
+      setWarnings([]);
+    } else {
+      const newProcessCount = parseInt(newProcesses);
+      setAllocated(Array(newProcessCount).fill().map(() => Array(resources || 0).fill(0)));
+      setMaximum(Array(newProcessCount).fill().map(() => Array(resources || 0).fill(0)));
+      setSafeSequence([]);
+      setIsSafe(null);
+      setWarnings([]);
+    }
   };
 
   const handleResourceChange = (e) => {
-    const newResources = parseInt(e.target.value);
+    let newResources = e.target.value === '' ? '' : Math.max(1, Math.min(10, parseInt(e.target.value)));
     setResources(newResources);
-    // Reset states when the number of resources changes
-    setAllocated(Array(processes).fill().map(() => Array(newResources).fill(0)));
-    setMaximum(Array(processes).fill().map(() => Array(newResources).fill(0)));
-    setAvailable(Array(newResources).fill(0));
-    setSafeSequence([]);
-    setIsSafe(null);
-    setWarnings([]);
+
+    if (newResources === '') {
+      // Reset states if the input is cleared
+      setAllocated([]);
+      setMaximum([]);
+      setAvailable([]);
+      setSafeSequence([]);
+      setIsSafe(null);
+      setWarnings([]);
+    } else {
+      const newResourceCount = parseInt(newResources);
+      setAllocated(Array(processes || 0).fill().map(() => Array(newResourceCount).fill(0)));
+      setMaximum(Array(processes || 0).fill().map(() => Array(newResourceCount).fill(0)));
+      setAvailable(Array(newResourceCount).fill(0));
+      setSafeSequence([]);
+      setIsSafe(null);
+      setWarnings([]);
+    }
   };
 
   const handleInputChange = (e, type, i, j) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value === '' ? '' : Math.max(0, parseInt(e.target.value));
     if (type === 'allocated') {
       const newAllocated = [...allocated];
       newAllocated[i][j] = isNaN(value) || value < 0 ? 0 : value; // Allow only non-negative values, 0 or above
@@ -74,7 +95,6 @@ const Calculator = () => {
       });
     });
 
-    // Check available resources
     available.forEach((availVal, i) => {
       if (availVal === '' || isNaN(availVal)) {
         warningsList.push(`Available resource R${i + 1} is not filled.`);
@@ -90,10 +110,6 @@ const Calculator = () => {
     if (!validateInputs()) {
       return;
     }
-
-    console.log('Maximum:', maximum);
-    console.log('Allocated:', allocated);
-    console.log('Available:', available);
 
     // Calculate the need matrix
     const needMatrix = maximum.map((maxRow, i) =>
@@ -168,7 +184,7 @@ const Calculator = () => {
           id="resources"
           name="resources"
           min="1"
-          max="20"
+          max="10"
           value={resources}
           onChange={handleResourceChange}
         /><br />
@@ -176,9 +192,9 @@ const Calculator = () => {
 
       <div className="rules-box">
         <h3>How to Use the Calculator</h3>
-        <ul>
-          <li>Enter the number of processes (p) and resources (n).</li>
-          <li>Fill in the input fields.</li>
+        <ul className="rules-list">
+          <li>Enter the number of processes (p), resources (n) and fill in the input fields.</li>
+          <li>Maximum number of processes is 20 and maximum number of resources is 10.</li>
           <li>The "Maximum" resources must be greater than or equal to the "Allocated" resources.</li>
           <li>You can input 0 or positive values only. No negative values are allowed.</li>
           <li>Leave the input field blank to input 0.</li>
@@ -209,22 +225,22 @@ const Calculator = () => {
                 </tr>
               </thead>
               <tbody>
-                {Array.from({ length: processes }).map((_, i) => (
+                {allocated.map((allocRow, i) => (
                   <tr key={i}>
-                    <td>P{i + 1}</td>
-                    {Array.from({ length: resources }).map((_, j) => (
+                    <td>Process {i + 1}</td>
+                    {allocRow.map((allocVal, j) => (
                       <React.Fragment key={j}>
                         <td>
                           <input
                             type="number"
-                            value={allocated[i][j] || ''} // Ensure value is controlled
+                            value={allocVal}
                             onChange={(e) => handleInputChange(e, 'allocated', i, j)}
                           />
                         </td>
                         <td>
                           <input
                             type="number"
-                            value={maximum[i][j] || ''} // Ensure value is controlled
+                            value={maximum[i][j]}
                             onChange={(e) => handleInputChange(e, 'maximum', i, j)}
                           />
                         </td>
@@ -235,47 +251,58 @@ const Calculator = () => {
               </tbody>
             </table>
           </div>
-          <div className="available-resources">
+          <div className="available-matrix">
             <h3>Available Resources</h3>
-            {Array.from({ length: resources }).map((_, i) => (
-              <div key={i}>
-                <label htmlFor={`available-${i}`}>Resource {i + 1}:</label>
-                <input
-                  type="number"
-                  id={`available-${i}`}
-                  value={available[i] || ''}
-                  onChange={(e) => handleInputChange(e, 'available', 0, i)}
-                />
-              </div>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  {Array.from({ length: resources }).map((_, i) => (
+                    <th key={i}>Resource {i + 1}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {available.map((availVal, i) => (
+                    <td key={i}>
+                      <input
+                        type="number"
+                        value={availVal}
+                        onChange={(e) => handleInputChange(e, 'available', 0, i)}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          {warnings.length > 0 && (
-            <div className="warnings">
-              <h4>Warnings:</h4>
-              <ul>
-                {warnings.map((warning, index) => (
-                  <li key={index}>{warning}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <button onClick={checkSafeState}>Check Safe State</button>
-
-          {isSafe !== null && (
-            <div className="result">
-              {isSafe ? (
-                <>
-                  <h4>The system is in a safe state.</h4>
-                  <p>Safe sequence: {safeSequence.map((p) => `P${p + 1}`).join(', ')}</p>
-                </>
-              ) : (
-                <h4>The system is not in a safe state.</h4>
-              )}
-            </div>
-          )}
         </>
+      )}
+
+      <button onClick={checkSafeState}>Check Safe State</button>
+
+      {warnings.length > 0 && (
+        <div className="warnings">
+          <h3>Warnings</h3>
+          <ul>
+            {warnings.map((warning, index) => (
+              <li key={index}>{warning}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {isSafe !== null && (
+        <div className={`safe-state ${isSafe ? 'safe' : 'unsafe'}`}>
+          {isSafe ? (
+            <>
+              <h3>The system is in a safe state!</h3>
+              <p>Safe sequence: {safeSequence.map((proc) => `P${proc + 1}`).join(', ')}</p>
+            </>
+          ) : (
+            <h3>The system is not in a safe state!</h3>
+          )}
+        </div>
       )}
     </div>
   );

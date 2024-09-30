@@ -77,7 +77,27 @@
     margin-left: 20px;
   }
 
-  .input-fields {
-    width: 60%; /* Adjust the width of the input fields */
-  }
+  .rules-list li {
+    margin-bottom: 10px; /* Adjust the value as needed for spacing */
+}
 
+.resource-matrix,
+.available-resources {
+    margin: 0 auto; /* Center the table */
+    width: auto; /* Allow the table to span the required length */
+    border-collapse: collapse; /* Optional: improves table appearance */
+}
+
+table {
+    width: auto; /* Ensures table does not take full width */
+    min-width: 300px; /* Optional: Set a minimum width for better readability */
+}
+
+th, td {
+    padding: 8px; /* Adds padding for better readability */
+    border: 1px solid #ccc; /* Optional: adds borders to cells */
+}
+
+th {
+    background-color: #f2f2f2; /* Optional: adds background color to header */
+}
